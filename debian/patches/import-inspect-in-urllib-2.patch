@@ -1,0 +1,17 @@
+Description: import inspect in urllib 2
+ Added "import inspect" to M2Crypto/m2urllib2.py (Closes: #493314, #484364, #477799).
+Author: Dima Barsky <dima@debian.org>
+Forwarded: no
+Reviewed by: Daniel Stender <debian@danielstender.com>
+Last-Update: 2015-11-17
+
+--- a/M2Crypto/m2urllib2.py
++++ b/M2Crypto/m2urllib2.py
+@@ -14,6 +14,7 @@
+ import socket
+ from urllib2 import *
+ import urlparse
++import inspect
+ 
+ import SSL
+ import httpslib

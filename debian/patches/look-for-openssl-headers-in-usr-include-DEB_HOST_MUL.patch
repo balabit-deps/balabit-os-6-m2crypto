@@ -1,0 +1,21 @@
+Description: Look for OpenSSL headers in /usr/include/$(DEB_HOST_MULTIARCH)
+ as well as /usr/include.
+Author: Colin Watson <cjwatson@ubuntu.com> 
+Bug: https://bugs.debian.org/696327
+Forwarded: no
+Reviewed-by: Daniel Stender <debian@danielstender.com>
+Last-Update: 2015-11-17
+
+--- a/setup.py
++++ b/setup.py
+@@ -60,6 +60,10 @@
+ 
+         self.swig_opts = ['-I%s' % i for i in self.include_dirs +
+                           [openssl_include_dir]]
++        if 'DEB_HOST_MULTIARCH' in os.environ:
++            opensslMultiarchIncludeDir = os.path.join(
++                openssl_include_dir, os.environ['DEB_HOST_MULTIARCH'])
++            self.swig_opts.append('-I%s' % opensslMultiarchIncludeDir)
+         self.swig_opts.append('-includeall')
+         self.swig_opts.append('-cpperraswarn')
+         self.swig_opts.append('-modern')

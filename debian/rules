@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+#export DEB_BUILD_OPTIONS=nocheck
+export PYBUILD_NAME=m2crypto
+
+%:
+	dh $@ --with python2 --buildsystem=pybuild
+
+override_dh_auto_test:
+	# tests currently disabled, see #637750
+
+override_dh_installexamples:
+	dh_installexamples
+	rm -f debian/python-m2crypto/usr/share/doc/python-m2crypto/examples/Zope/starts.bat
+	sed -i 's/usr\/local\/bin\/python/usr\/bin\/python/' \
+           debian/python-m2crypto/usr/share/doc/python-m2crypto/examples/medusa*/http_server.py
+
+override_dh_compress:
+	dh_compress -X.py # save examples
